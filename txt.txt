@@ -1,0 +1,42 @@
+
+<?php
+    include_once 'header.php';
+?>
+    
+    
+    
+        <div class="tabulka login">
+            <form action="includes/checkcreds.inc.php" method="post">
+                <label>Zadejte svoje přihlašovací jméno nebo email:</label><br>
+                <input type="text" name="emname"><br>
+                <label>Zadejte svoje heslo:</label><br>
+                <input type="password" name="passwd"><br>
+            <input type="submit" name="submit1">
+            </form>
+
+        </div>
+
+      
+        
+<?php
+    if(isset($_GET["error"])){
+        if($_GET["error"] == "wrongcreds"){
+            echo "<p class='error_message'>Zadané přihlašovácí údaje neodpovídají.</p>";
+        }
+        else if($_GET["error"] == "emptyinput"){
+            echo "<p class='error_message'>Vyplňte všechny pole.</p>";
+        }
+        
+        
+    }
+
+?>
+               
+    
+    
+        
+        
+
+<?php
+    include_once 'footer.php';
+?>
