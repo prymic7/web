@@ -1,30 +1,16 @@
 <?php
-    session_start();
-
-    
-
     include_once 'includes/functions.inc.php';
     include_once 'includes/dbh.inc.php';
-    $name;
-    $id;
-    $id_logged;
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
+
+    session_start();
+    $id_logged = isset($_SESSION["id"]) ? $_SESSION["id"] : null;
+    $logged_username = isset($_SESSION["username"]) ? $_SESSION["username"] : null;
+    $user_logged = isset($_SESSION["username"]) ? true : false;
+
+    if(!$user_logged)
+    {
+        // header("location:loginpage.php");
     }
-    if(isset($_SESSION["id"])){
-        $id_logged = $_SESSION["id"];
-    }
-    
-    if(isset($_SESSION["username"])){
-        $name = $_SESSION["username"];
-    }
-
-
-
-
-
-    
-    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +49,7 @@
                 <li id="msgnav"><img src="img/msgnav.png" alt="" id="msgnavimg" class="nav-list"></li>
                 <li id="addfriendnav"><img src="img/addfriendnav.png" alt="" id="addfriendnavimg" class="nav-list"></li>
                 <?php
-                    if(isset($_SESSION["username"])){
+                    if($user_logged){
                         echo "<div class='search-for-user-all'>";
                             echo "<form action='usersearchresult.php' method='post'>";
                             echo "<input type='text' class='search-for-user-bar' name='textuser' placeholder='Koho hledáte?..' class='input-bar1'>";
@@ -93,7 +79,7 @@
             <ul class="pravoul">
                 <?php
                     
-                    if(isset($_SESSION["username"])){
+                    if($user_logged){
                         echo "<div class='logged-right-nav'>";
                             echo "<li id='list-profile'><a class='pravoul-text' href='profile.php?id={$_SESSION['id']}'>{$_SESSION['username']}</a></li>";
                             echo "<li id='list-logout'><a href='includes/logout.inc.php'><img src='img/iconlogout.png' alt='' id='icon-logout'></a></li>";
@@ -214,8 +200,6 @@
     <?php
         
         if(isset($_SESSION["username"])){
-            
-            
             if($friend_requests = loadFriendRequests($id_logged, $connection)){
                 
                 

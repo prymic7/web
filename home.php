@@ -21,7 +21,7 @@ $latitude = $locationData['loc'] ? explode(',', $locationData['loc'])[0] : '';
 $longitude = $locationData['loc'] ? explode(',', $locationData['loc'])[1] : '';
 
 
-$apiKey = '683d627ee1097bb6085204319859d7b7';
+$apiKey = ''; //set your weather api key
 
 
 $weatherNowApiUrl = "http://api.openweathermap.org/data/2.5/weather?q=$city&appid=$apiKey";

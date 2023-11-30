@@ -874,14 +874,8 @@ p.error_message {
 .message-bottom-bar {
   position: relative;
   background-color: white;
-  
   height: 100%;
-  
-  
-  
 }
-
-
 
 #message-text-input{
   
@@ -1021,8 +1015,6 @@ p.error_message {
   margin-top: 10px;
   font-size: 18px;
   height: 35%;
-
-  
 }
 
 .one-slab-message-text{
@@ -1032,6 +1024,11 @@ p.error_message {
   font-weight:300;
   font-size: 13px;
   
+}
+
+#text-add-description
+{
+    /* background-color: blue; */
 }
 
 .username-text-div{

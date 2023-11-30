@@ -2,24 +2,22 @@
     include_once 'header.php';
     include_once 'includes/functions.inc.php';
     include_once 'includes/dbh.inc.php';
+
     $name;
     $id;
     $id = $_GET['id'];
-    $id_logged = $_SESSION["id"];
-    if(isset($_SESSION["username"])){
-        $name = $_SESSION["username"];
+    if(!$user_logged)
+    {
+        header("location:loginpage.php");
     }
-    
-    
-    
-
-        // if(!isset($_SESSION["username"])){
-        //     header("location: loginpage.php");
-        // }
-   
-
     $userinfo = loadUserInfo($id, $connection);
     $username = $userinfo["username"];
+
+
+
+ 
+
+
     
     //Error handling
     if(isset($_GET["error"])){
@@ -647,26 +645,31 @@
             });
         </script>';
     }
-
-    
-    
-
-
 ?>  
 
-
-
     <div class="profile">
-        
         <div class="timeline">
-            <div class="send-message">
+            <?php
+            if($id != $id_logged)
+            {
+                echo '<div class="send-message">
                 <img src="img/iconmessage.png" alt="" id="icon-send-message">
                 <p id="text-send-message">Poslat zprávu</p>
-            </div>
-            <div class="add-friend">
-                
-            </div>
+                </div>';
+            }
+            else
+            {
+                echo '<div class="add-profile-desc" style="background-color:#eaeaea; position:absolute;margin-left:850px;margin-top: 20px;    width: 130px;
+                height: 35px; border-radius: 3px; font-size: 14px;background-color: rgba(191,191,191,0.3);">
+                <p id="text-add-description" style="position: absolute;    margin-left: 22px;
+                margin-top: 10px;
+                font-weight: bold;
+                font-size:13px;">Add Description</p></div>';
 
+            }
+            ?>
+            <div class="add-friend">
+            </div>
             
             <div class="profile-picture-buttons">
                 <button id="delete-image">Vymazat</button>
@@ -686,14 +689,114 @@
             
         </div>
         <div class="user-more">
-            
+            <div class="text-area-div" style="display: none">
+                <div class="text-area-btn-div" style="background-color:#eaeaea; position:absolute;margin-left:60px;margin-top: 20px;    width: 130px;
+                height: 35px; border-radius: 3px; font-size: 14px;background-color: rgba(191,191,191,0.8)">
+                <p id="text-add-description" style="position: absolute;    margin-left: 22px;
+                margin-top: 10px;
+                font-weight: bold;
+                font-size:13px;">Set Description</p></div>
+                </div>
+                <textarea id="text-area-profile" style="display: none; 
+                margin-top: 60px; margin-left: 60px; position:absolute"> Insert here your description.</textarea>
+
+            </div>
+
+            <div class="desc-area" style="width:500px;height:450px;position:absolute;
+            margin-top:400px;margin-left:450px; background-color:blanchedalmond; z-index:10000">
+                <p id="desc-profile-text"></p>
+            </div>
+
         </div>
     </div>
         
 
 <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        getProfileDescription();
+        let sendMessageDiv = document.querySelector(".send-message")
+    })
+    let vulva = document.querySelector(".text-area-div");
+    let textArea = document.querySelector("#text-area-profile");
+    document.addEventListener("DOMContentLoaded", function(){
+        let addDesc = document.querySelector(".add-profile-desc")
+        if(addDesc)
+        {
+            addDesc.addEventListener("click", function(){
+                console.log("zmacknutooooooooooo")
+                let sendBtn = document.querySelector(".text-area-div")
 
+                if(textArea.style.display === "block")
+                {
+                    textArea.style.display = "none";
+                }
+                else if(textArea.style.display === "none")
+                {
+                    textArea.style.display = "block";
+                }
+                if(sendBtn.style.display === "block")
+                {
+                    sendBtn.style.display = "none";
+                }
+                else if(sendBtn.style.display === "none")
+                {
+                    sendBtn.style.display = "block";
+                }
+            })
+        }
+    })
+    function getProfileDescription()
+    {
+        $.ajax({
+            url: 'includes/getprofiledesc.inc.php',
+            method: 'POST',
+            data: {user_id: logged_id},
+            success: function(response) {
+                let data = response;
+                let ptext;
+                if(response)
+                {
+                    ptext = document.querySelector("#desc-profile-text")
+                    let to = JSON.parse(data);
+                    ptext.textContent = to.user_desc;
+                    textArea.style.display = "none";
+                    vulva.style.display = "none";
+                }
+                console.log(data);
+            },
+            error: function(xhr, status, error) {
+            console.error(error);
+            console.error(xhr);
+            console.error(status);
+            }
+        });
+    }
 
+    let sendBtn = document.querySelector(".text-area-btn-div")
+    sendBtn.addEventListener("click", function()
+    {
+        console.log("tap");
+        let descValue = textArea.value;
+        let logged_id = <?php echo $id_logged ?>;
+        
+        $.ajax({
+            url: 'includes/insertprofiledesc.inc.php',
+            method: 'POST',
+            data: {desc: descValue,
+                    id_logged: logged_id},
+            success: function(response) {
+                console.log("nic");
+                getProfileDescription();
+
+            },
+            error: function(xhr, status, error) {
+            console.error(error);
+            console.error(xhr);
+            console.error(status);
+            }
+        });
+
+    })
     
     
     let urlAll = new URLSearchParams(window.location.search);
@@ -763,9 +866,6 @@
     fileInput.click()
     
     })
-    
-
-    
     
     let saveButton = document.querySelector('#submit-img-btn')
     let deleteButton = document.querySelector('#delete-image')

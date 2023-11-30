@@ -3,17 +3,13 @@
 
 <?php
 
-    // if(!isset($_SESSION["username"])){
-    //     header("location: loginpage.php");
-    // }
-
     include_once 'header.php';
     include_once 'includes/dbh.inc.php';
     include_once 'includes/functions.inc.php';
     $nameid = $_SESSION['id'];
     if(!isset($_SESSION["username"])){
         setcookie("redirect", "calendar", time() + 3600, "/");
-        header("location: loginpage.php?error=nologincalendar");
+        // header("location: loginpage.php?error=nologincalendar");
         
     }
     

@@ -29,9 +29,6 @@
                         echo "<p class='error_message'>Pro přístup do kalendáře se prosím přihlašte nebo zaregistrujte.</p>";
                         
                     }
-
-                    
-                    
                 }
 
             ?>

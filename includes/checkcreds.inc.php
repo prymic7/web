@@ -1,7 +1,5 @@
 <?php
 
-
-
 if(isset($_POST["submit1"])){
 
     $username = $_POST["emname"];
@@ -20,15 +18,6 @@ if(isset($_POST["submit1"])){
     if((correctCredentials($connection, $username, $password)) == false){
         header("location: ../loginpage.php?error=wrongcreds");
     }
-
-    
-
-
-    
-
-
-
-
 
 } else {
     

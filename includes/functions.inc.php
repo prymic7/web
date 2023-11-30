@@ -66,8 +66,6 @@ function createUser($connection, $username, $first_name, $second_name, $email, $
     $_SESSION['allowedAccess'] = true;
     $userId = mysqli_insert_id($connection);
     return $userId;
-    
-    
 }
 
 function usernameExists($connection, $username, $email){

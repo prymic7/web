@@ -269,6 +269,28 @@
     
 }
 
+.text-area-btn-div
+{
+    margin-left: 850px;
+    margin-top: 20px;
+    width: 130px;
+    height: 35px;
+    position: absolute;
+    border-radius: 3px;
+    font-size: 14px;
+    background-color: rgba(191,191,191,0.3);
+}
+
+.add-profile-desc{
+    margin-left: 850px;
+    margin-top: 20px;
+    position: absolute;
+    background-color: rgba(191,191,191,0.3);
+    border-radius: 3px;
+    width: 130px;
+    height: 35px;
+  }
+
 
 .send-message:hover {
     background-color: rgba(191,191,191,0.6);
@@ -287,6 +309,11 @@
     margin-top: 75px;
     background-color: rgba(191,191,191,0.3); 
     cursor: pointer;
+}
+
+#text-add-description
+{
+    /* background-color: blue; */
 }
 
 .delete-friend-div {
@@ -373,6 +400,14 @@
 }
 
 #text-send-message {
+    position: absolute;
+    margin-left: 35px;
+    margin-top: 10px;
+    font-weight: bold;
+
+}
+
+#text-add-description {
     position: absolute;
     margin-left: 35px;
     margin-top: 10px;
